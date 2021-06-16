@@ -6,12 +6,15 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:47:18 by agutierr          #+#    #+#             */
-/*   Updated: 2021/06/15 19:39:40 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/06/16 20:34:01 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
+
+# define READ_END 0
+# define WRITE_END 1
 
 # include <stdio.h>
 # include <unistd.h>
@@ -19,7 +22,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-typedef	struct	s_ppx
+typedef	struct	s_pipex
 {
 	int		fd_i;
 	int		fd_o;
@@ -29,7 +32,7 @@ typedef	struct	s_ppx
 	char	**envp;
 	char	*path;
 	int		dirfd;
-}				t_ppx;
+}				t_pipex;
 
 /*
 *		msgs
@@ -43,5 +46,8 @@ void	print_exit(char *str);
 */
 int		check_argv(char *argv);
 int		check_args(int argc, char **argv);
+
+int		run_child_in(t_pipex *ppx);
+int		run_child_out(t_pipex *ppx);
 
 #endif
