@@ -6,7 +6,7 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:47:18 by agutierr          #+#    #+#             */
-/*   Updated: 2021/06/16 20:34:01 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/06/17 17:00:19 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ int		check_argv(char *argv);
 int		check_args(int argc, char **argv);
 
 int		run_child_in(t_pipex *ppx);
-int		run_child_out(t_pipex *ppx);
+int		run_child_out(t_pipex *ppx, char *str);
 
 #endif

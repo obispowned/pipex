@@ -6,12 +6,13 @@
 #    By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/15 19:24:37 by agutierr          #+#    #+#              #
-#    Updated: 2021/06/15 19:54:07 by agutierr         ###   ########.fr        #
+#    Updated: 2021/06/17 17:05:46 by agutierr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	pipex
-SRCS			=	main.c srcs/check_args.c srcs/msg_err1.c
+SRCS			=	main.c srcs/check_args.c srcs/msg_err1.c\
+					srcs/child_process.c
 OBJS 			=	$(SRCS:.c=.o)
 
 GCC 			=	gcc
