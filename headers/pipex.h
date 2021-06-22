@@ -29,7 +29,7 @@ typedef	struct	s_pipex
 	int		pipefd[2];
 	char	*cmd1;
 	char	*cmd2;
-	char	**envp;
+	char	**envv;
 	char	*path;
 	int		dirfd;
 }				t_pipex;

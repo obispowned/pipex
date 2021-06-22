@@ -14,7 +14,8 @@
 
 int		check_argv(char *argv)
 {
-	// A esta funcion llegan los argv[i] en bucle para checkear cada argumento
+	if (!argv)// A esta funcion llegan los argv[i] en bucle para checkear cada argumento
+		return (0);
 	return (1);
 }
 

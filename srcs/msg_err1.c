@@ -30,7 +30,7 @@ int		print_err(char *str)
 	return (0);
 }
 
-void	ft_print_exit(char *str)
+void	print_exit(char *str)
 {
 	ft_putchar(str);
 	exit(0);

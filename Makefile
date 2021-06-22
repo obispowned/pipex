@@ -12,7 +12,7 @@
 
 NAME			=	pipex
 SRCS			=	main.c srcs/check_args.c srcs/msg_err1.c\
-					srcs/child_process.c
+					srcs/child_process.c srcs/split.c
 OBJS 			=	$(SRCS:.c=.o)
 
 GCC 			=	gcc
