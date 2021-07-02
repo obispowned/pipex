@@ -6,7 +6,7 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:47:18 by agutierr          #+#    #+#             */
-/*   Updated: 2021/06/17 17:00:19 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/07/02 22:50:38 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,22 @@ typedef	struct	s_pipex
 	char	*cmd1;
 	char	*cmd2;
 	char	**envv;
-	char	*path;
 	int		dirfd;
 }				t_pipex;
+
+/*
+*      libft
+*/
+static size_t		count_segment(char const *s, char c);
+static char			*ft_strndup(const char *s1, size_t n);
+static void			*destroy_strs(char **strs);
+char				**ft_split(char const *s, char c);
+void				double_kill(char **str);
+char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strjoint(char *str, char c);
+char				*ft_strchr(const char *s, int c);
+char				*ft_strdup(char *str);
+int					ft_strlen(char *str);
 
 /*
 *		msgs
@@ -46,8 +59,14 @@ void	print_exit(char *str);
 */
 int		check_argv(char *argv);
 int		check_args(int argc, char **argv);
+int		check_line(char *envp);
 
-int		run_child_in(t_pipex *ppx);
-int		run_child_out(t_pipex *ppx, char *str);
+/*
+*		program
+*/
+int		run_child_in(t_pipex *ppx, char **envp);
+int		run_child_out(t_pipex *ppx, char **envp);
+char	*search_cmd(t_pipex *ppx, char *command);
+char 	**get_all_path(char **envp, char *search);
 
 #endif

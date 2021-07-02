@@ -6,7 +6,7 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:51:22 by agutierr          #+#    #+#             */
-/*   Updated: 2021/06/17 17:08:27 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/07/02 22:41:14 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,65 +15,13 @@
 void	waits(int x)
 {
 	int i;
-	
+
 	i = 0;
 	while (i < x)
 	{
 		wait(NULL);
 		i++;
 	}
-}
-
-int	check_line(char *envp)
-{
-	int i;
-	char *path;
-
-	path = "PATH=";
-	i = 0;
-	while (i < 5)
-	{
-		if (path[i] != envp[i])
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	get_position(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if(check_line(envp[i]))
-			return (i);
-		i++;
-	}
-}
-
-char **get_all_path(char **envp, char *search)
-{
-	int i;
-	char **str;
-
-	i = get_position(envp);
-	str = ft_split(envp[i], ':');
-	return (str);
-}
-
-
-void	args(t_pipex *ppx, int argc, char **argv, char **envp)
-{
-	if (!(check_args(argc, argv)))
-		return(print_exit("Argumentos erroneos"));
-	ppx->fd_i = open(argv[1], O_RDONLY);
-	ppx->fd_o = open(argv[4], O_RDONLY);
-	if (!ppx->fd_i || !ppx->fd_o)
-		return(print_exit("Argumentos erroneos"));
-	ppx->envv = get_all_path(envp, "PATH=");
-
 }
 
 int		main(int argc, char **argv, char **envp)
@@ -87,7 +35,7 @@ int		main(int argc, char **argv, char **envp)
 	if (pid == -1)
 		return(print_err("Error al crear el proceso hijo"));
 	if (pid == 0)
-		run_child_in(&ppx);
+		run_child_in(&ppx, envp);
 	else
 	{
 		close (ppx.pipefd[WRITE_END]);
@@ -97,8 +45,8 @@ int		main(int argc, char **argv, char **envp)
 		if (pid == 0)
 			run_child_out(&ppx, argv[5]);
 		else
-			close (ppx.pipefd[WRITE_END]);
+			close (ppx.pipefd[READ_END]);
 		waits(2);
 	}
-	return (1);
+	return (0);
 }

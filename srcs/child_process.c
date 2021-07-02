@@ -6,30 +6,72 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 17:00:34 by agutierr          #+#    #+#             */
-/*   Updated: 2021/06/17 17:00:56 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/07/02 22:53:19 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/pipex.h"
 
-int		run_child_in(t_pipex *ppx)
+
+
+char	*search_cmd(t_pipex *ppx, char *command)
 {
-	write(1, "child in\n",9);
-	exit (0);
-	close (ppx->pipefd[READ_END]);
-	dup2 (ppx->pipefd[WRITE_END], STDOUT_FILENO); // para establecer la salida al inicio de la tuberia
-	close (ppx->pipefd[WRITE_END]);
-//	execve(); // para arrancar el comando
+	int	i;
+	int fd_cmd;
+	char *path_try;
+	char *correct_path;
+
+	path_try = ft_strjoint(ppx->envv[i], '/');
+	path_try = ft_strjoin(path_try, command);
+	i = 0;
+	while (path_try)
+	{
+		fd_cmd = open(path_try, O_RDONLY);
+		if (fd_cmd >= 0)
+		{
+			correct_path = ft_strdup(path_try);
+			free(path_try);
+			close(fd_cmd);
+			return (correct_path);
+		}
+		free(path_try);
+		path_try = ft_strjoint(ppx->envv[i], '/');
+		path_try = ft_strjoin(path_try, command);
+		i++;
+	}
+	return (NULL);
 }
 
-int		run_child_out(t_pipex *ppx, char *str)
+
+int		run_child_in(t_pipex *ppx, char **envp)
 {
-	int	fd;
-	write(1, "child out\n",10);
-	exit (0);
-	fd = open (str, O_WRONLY);
-	dup2(ppx->pipefd[READ_END], STDIN_FILENO);
+	char	**command_in;
+	char	*correct_path;
+
 	close (ppx->pipefd[READ_END]);
-	dup2(fd ,STDOUT_FILENO);
-//	execve(); para arrancar el comando
+	command_in = ft_split(ppx->cmd1, ' ');
+	correct_path = search_cmd(ppx, command_in[0]);
+	if (!correct_path)
+		print_exit("Error\nPonga un comando existente...\n");
+	dup2 (ppx->fd_i, STDIN_FILENO);
+	dup2 (ppx->pipefd[WRITE_END], STDOUT_FILENO); // para establecer la salida al inicio de la tuberia
+	close (ppx->fd_i);
+	close (ppx->pipefd[WRITE_END]);
+	execve(correct_path, command_in, envp);
+}
+
+int		run_child_out(t_pipex *ppx, char **envp)
+{
+	char	**command_out;
+	char	*correct_path;
+
+	command_out = ft_split(ppx->cmd2, ' ');
+	correct_path = search_cmd(ppx, command_out[0]);
+	if (!correct_path)
+		print_exit("Error\nPonga un comando existente...\n");
+	dup2(ppx->fd_o, STDOUT_FILENO);
+	dup2(ppx->pipefd[READ_END], STDIN_FILENO);
+	close(ppx->fd_o);
+	close (ppx->pipefd[READ_END]);
+	execve(correct_path, command_out, envp);
 }
