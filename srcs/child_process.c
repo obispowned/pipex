@@ -14,6 +14,8 @@
 
 int		run_child_in(t_pipex *ppx)
 {
+	write(1, "child in\n",9);
+	exit (0);
 	close (ppx->pipefd[READ_END]);
 	dup2 (ppx->pipefd[WRITE_END], STDOUT_FILENO); // para establecer la salida al inicio de la tuberia
 	close (ppx->pipefd[WRITE_END]);
@@ -23,7 +25,8 @@ int		run_child_in(t_pipex *ppx)
 int		run_child_out(t_pipex *ppx, char *str)
 {
 	int	fd;
-
+	write(1, "child out\n",10);
+	exit (0);
 	fd = open (str, O_WRONLY);
 	dup2(ppx->pipefd[READ_END], STDIN_FILENO);
 	close (ppx->pipefd[READ_END]);

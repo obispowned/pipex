@@ -35,6 +35,7 @@ int	check_line(char *envp)
 	{
 		if (path[i] != envp[i])
 			return (0);
+		i++;
 	}
 	return (1);
 }
@@ -42,14 +43,13 @@ int	check_line(char *envp)
 int	get_position(char **envp)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (envp[i])
 	{
-		j = 0;
 		if(check_line(envp[i]))
 			return (i);
+		i++;
 	}
 }
 
@@ -59,8 +59,6 @@ char **get_all_path(char **envp, char *search)
 	char **str;
 
 	i = get_position(envp);
-	write(1, envp[i],4);
-	system("pause"); 
 	str = ft_split(envp[i], ':');
 	return (str);
 }
