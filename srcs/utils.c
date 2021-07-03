@@ -6,7 +6,7 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 22:45:53 by agutierr          #+#    #+#             */
-/*   Updated: 2021/07/02 22:52:20 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/07/03 18:23:29 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void			double_kill(char **str)
 	i = 0;
 	while (str[i])
 	{
-		kill(str[i]);
+		free(str[i]);
 		i++;
 	}
 	free(str);
@@ -102,7 +102,7 @@ char		*ft_strdup(char *str)
 	return (finally);
 }
 
-int					ft_strlen(char *str)
+int					ft_strlen(const char *str)
 {
 	int				i;
 

@@ -6,7 +6,7 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 17:00:34 by agutierr          #+#    #+#             */
-/*   Updated: 2021/07/02 22:53:19 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/07/03 19:49:07 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char	*search_cmd(t_pipex *ppx, char *command)
 	char *path_try;
 	char *correct_path;
 
+	i = 0;
 	path_try = ft_strjoint(ppx->envv[i], '/');
 	path_try = ft_strjoin(path_try, command);
-	i = 0;
 	while (path_try)
 	{
 		fd_cmd = open(path_try, O_RDONLY);
@@ -43,7 +43,7 @@ char	*search_cmd(t_pipex *ppx, char *command)
 }
 
 
-int		run_child_in(t_pipex *ppx, char **envp)
+void		run_child_in(t_pipex *ppx, char **envp)
 {
 	char	**command_in;
 	char	*correct_path;
@@ -51,6 +51,7 @@ int		run_child_in(t_pipex *ppx, char **envp)
 	close (ppx->pipefd[READ_END]);
 	command_in = ft_split(ppx->cmd1, ' ');
 	correct_path = search_cmd(ppx, command_in[0]);
+	//printf("correct_path_in: %s\n", correct_path);
 	if (!correct_path)
 		print_exit("Error\nPonga un comando existente...\n");
 	dup2 (ppx->fd_i, STDIN_FILENO);
@@ -60,13 +61,14 @@ int		run_child_in(t_pipex *ppx, char **envp)
 	execve(correct_path, command_in, envp);
 }
 
-int		run_child_out(t_pipex *ppx, char **envp)
+void		run_child_out(t_pipex *ppx, char **envp)
 {
 	char	**command_out;
 	char	*correct_path;
 
 	command_out = ft_split(ppx->cmd2, ' ');
 	correct_path = search_cmd(ppx, command_out[0]);
+	//printf("correct_path_out: %s\n", correct_path);
 	if (!correct_path)
 		print_exit("Error\nPonga un comando existente...\n");
 	dup2(ppx->fd_o, STDOUT_FILENO);

@@ -6,7 +6,7 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:51:22 by agutierr          #+#    #+#             */
-/*   Updated: 2021/07/02 22:41:14 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/07/03 19:45:38 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		main(int argc, char **argv, char **envp)
 		if (pid == -1)
 			return(print_err("Error al crear el proceso hijo"));
 		if (pid == 0)
-			run_child_out(&ppx, argv[5]);
+			run_child_out(&ppx, envp);
 		else
 			close (ppx.pipefd[READ_END]);
 		waits(2);

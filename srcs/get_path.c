@@ -6,7 +6,7 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 18:44:16 by agutierr          #+#    #+#             */
-/*   Updated: 2021/07/02 22:43:13 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/07/03 18:21:53 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	get_position(char **envp)
 			return (i);
 		i++;
 	}
+	return (-1);
 }
 
 char **get_all_path(char **envp, char *search)

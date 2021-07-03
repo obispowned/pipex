@@ -6,7 +6,7 @@
 #    By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/15 19:24:37 by agutierr          #+#    #+#              #
-#    Updated: 2021/07/02 22:49:12 by agutierr         ###   ########.fr        #
+#    Updated: 2021/07/03 19:33:42 by agutierr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS			=	main.c\
 OBJS 			=	$(SRCS:.c=.o)
 
 GCC 			=	gcc
-FLAGS			=	-Wall -Wall -Werror
+CFLAGS			=	-Wall -Wall -Werror
 
 #############################
 RED 			= \033[0;31m
@@ -33,12 +33,12 @@ RESET			= \033[0m
 
 all: compile
 
-%.o: %.c
-	$(GCC) $(CFLAGS) $(INCLUDES) -o $@ -c $^
+#%.o: %.c
+#	$(GCC) $(CFLAGS) $(INCLUDES) -o $@ -c $^
 
 compile: $(OBJS)
 	@echo "${PURPLE}  Iniciando Compilacion ...${RESET}"
-	$(GCC) $(OBJS) -o $(NAME)
+	$(GCC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "${GREEN}[.oOo.oOo.oOo.oOo.]"
 	@echo "[ C O M P I L A O ]"
 	@echo "[.oOo.oOo.oOo.oOo.]${RESET}"
