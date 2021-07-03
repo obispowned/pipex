@@ -6,7 +6,7 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 18:44:16 by agutierr          #+#    #+#             */
-/*   Updated: 2021/07/03 18:21:53 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/07/03 20:03:16 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	check_line(char *envp)
 {
-	int i;
-	char *path;
+	int		i;
+	char	*path;
 
 	path = "PATH=";
 	i = 0;
@@ -35,17 +35,17 @@ int	get_position(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if(check_line(envp[i]))
+		if (check_line (envp[i]))
 			return (i);
 		i++;
 	}
 	return (-1);
 }
 
-char **get_all_path(char **envp, char *search)
+char	**get_all_path(char **envp, char *search)
 {
-	int i;
-	char **str;
+	int		i;
+	char	**str;
 
 	i = get_position(envp);
 	str = ft_split(envp[i], ':');

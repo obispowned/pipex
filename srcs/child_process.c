@@ -6,20 +6,18 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 17:00:34 by agutierr          #+#    #+#             */
-/*   Updated: 2021/07/03 19:49:07 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/07/03 20:02:25 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/pipex.h"
 
-
-
 char	*search_cmd(t_pipex *ppx, char *command)
 {
-	int	i;
-	int fd_cmd;
-	char *path_try;
-	char *correct_path;
+	int		i;
+	int		fd_cmd;
+	char	*path_try;
+	char	*correct_path;
 
 	i = 0;
 	path_try = ft_strjoint(ppx->envv[i], '/');
@@ -42,8 +40,7 @@ char	*search_cmd(t_pipex *ppx, char *command)
 	return (NULL);
 }
 
-
-void		run_child_in(t_pipex *ppx, char **envp)
+void	run_child_in(t_pipex *ppx, char **envp)
 {
 	char	**command_in;
 	char	*correct_path;
@@ -51,24 +48,22 @@ void		run_child_in(t_pipex *ppx, char **envp)
 	close (ppx->pipefd[READ_END]);
 	command_in = ft_split(ppx->cmd1, ' ');
 	correct_path = search_cmd(ppx, command_in[0]);
-	//printf("correct_path_in: %s\n", correct_path);
 	if (!correct_path)
 		print_exit("Error\nPonga un comando existente...\n");
 	dup2 (ppx->fd_i, STDIN_FILENO);
-	dup2 (ppx->pipefd[WRITE_END], STDOUT_FILENO); // para establecer la salida al inicio de la tuberia
+	dup2 (ppx->pipefd[WRITE_END], STDOUT_FILENO);
 	close (ppx->fd_i);
 	close (ppx->pipefd[WRITE_END]);
-	execve(correct_path, command_in, envp);
+	execve (correct_path, command_in, envp);
 }
 
-void		run_child_out(t_pipex *ppx, char **envp)
+void	run_child_out(t_pipex *ppx, char **envp)
 {
 	char	**command_out;
 	char	*correct_path;
 
 	command_out = ft_split(ppx->cmd2, ' ');
 	correct_path = search_cmd(ppx, command_out[0]);
-	//printf("correct_path_out: %s\n", correct_path);
 	if (!correct_path)
 		print_exit("Error\nPonga un comando existente...\n");
 	dup2(ppx->fd_o, STDOUT_FILENO);
