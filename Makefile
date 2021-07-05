@@ -6,7 +6,7 @@
 #    By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/15 19:24:37 by agutierr          #+#    #+#              #
-#    Updated: 2021/07/03 19:33:42 by agutierr         ###   ########.fr        #
+#    Updated: 2021/07/05 21:13:30 by agutierr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS			=	main.c\
 					srcs/split.c\
 					srcs/get_path.c\
 					srcs/utils.c\
+					srcs/utils2.c\
 
 OBJS 			=	$(SRCS:.c=.o)
 
@@ -31,12 +32,12 @@ GREEN			= \033[1;32m
 RESET			= \033[0m
 #############################
 
-all: compile
+all: $(NAME)
 
-#%.o: %.c
-#	$(GCC) $(CFLAGS) $(INCLUDES) -o $@ -c $^
+%.o: %.c
+	$(GCC) $(CFLAGS) $(INCLUDES) -o $@ -c $^
 
-compile: $(OBJS)
+$(NAME): $(OBJS)
 	@echo "${PURPLE}  Iniciando Compilacion ...${RESET}"
 	$(GCC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "${GREEN}[.oOo.oOo.oOo.oOo.]"

@@ -6,11 +6,11 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 20:04:42 by agutierr          #+#    #+#             */
-/*   Updated: 2021/07/03 20:04:43 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/07/05 21:10:13 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../headers/pipex.h"
+#include "../headers/pipex.h"
 
 static size_t	count_segment(char const *s, char c)
 {
@@ -38,7 +38,8 @@ static char	*ft_strndup(const char *s1, size_t n)
 	char				*clone;
 	size_t				i;
 
-	if ((clone = (char*)malloc(sizeof(char) * (n + 1))) == NULL)
+	clone = (char *)malloc(sizeof(char) * (n + 1));
+	if (clone == NULL)
 		return (NULL);
 	i = 0;
 	while (i < n)
@@ -71,8 +72,7 @@ char	**ft_split(char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	tab_counter = count_segment(s, c);
-	if ((strs = (char **)malloc(sizeof(char *) * (tab_counter + 1))) == NULL)
-		return (NULL);
+	strs = (char **)malloc(sizeof(char *) * (tab_counter + 1));
 	tab_counter = 0;
 	j = -1;
 	while (s[++j])
@@ -82,7 +82,8 @@ char	**ft_split(char const *s, char c)
 		i = 0;
 		while (s[j + i] && s[j + i] != c)
 			i++;
-		if ((strs[tab_counter++] = ft_strndup(&s[j], i)) == NULL)
+		strs[tab_counter] = ft_strndup(&s[j], i);
+		if (strs[tab_counter++] == NULL)
 			return (destroy_strs(strs));
 		j += i - 1;
 	}

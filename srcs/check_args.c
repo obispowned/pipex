@@ -6,7 +6,7 @@
 /*   By: agutierr <agutierr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 19:03:20 by agutierr          #+#    #+#             */
-/*   Updated: 2021/07/03 20:00:52 by agutierr         ###   ########.fr       */
+/*   Updated: 2021/07/05 19:24:13 by agutierr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	args(t_pipex *ppx, int argc, char **argv, char **envp)
 	ppx->cmd2 = argv[3];
 	ppx->fd_o = open(argv[4], O_WRONLY
 			| O_CREAT | O_TRUNC | O_APPEND, S_IRWXU);
-	if (!ppx->fd_i || !ppx->fd_o)
-		return (print_exit("Argumentos erroneos"));
+	if (ppx->fd_i == -1 || ppx->fd_o == -1)
+		return (print_exit("Error:\nArgumentos erroneos.\n"));
 	ppx->envv = get_all_path(envp, "PATH=");
 	ppx->envv[0] = strchr(ppx->envv[0], '/');
 }
